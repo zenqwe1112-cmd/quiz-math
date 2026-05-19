@@ -56,105 +56,57 @@ answer:"2"
 
 {
 question:"10. เป็นแฟนกันมั้ยคะบ",
-choices:[ "เป็น" "โอเคะ"],
+choices:["เป็นสิ","ตกลง"],
 answer:"อะไรก็ได้"
 }
 
 ];
 
-let current=0;
-let score=0;
+let current = 0;
+let score = 0;
 
 showQuestion();
 
 function showQuestion(){
 
-let q=questions[current];
+document.getElementById("question").innerText =
+questions[current].question;
 
-document.getElementById("question").innerText=q.question;
-
-document.getElementById("count").innerText=
+document.getElementById("count").innerText =
 (current+1)+"/"+questions.length;
 
-let buttons=
+let buttons =
 document.querySelectorAll(".choice");
 
-buttons.forEach((btn,index)=>{
+buttons[0].innerText =
+questions[current].choices[0];
 
-btn.innerText=q.choices[index];
-
-btn.style.backgroundColor="white";
-
-btn.disabled=false;
-
-btn.onclick=()=>checkAnswer(btn);
-
-});
+buttons[1].innerText =
+questions[current].choices[1];
 
 }
 
-function checkAnswer(button){
+function next(choice){
 
-let selected=button.innerText;
-
-let correct=
-questions[current].answer;
-
-let buttons=
-document.querySelectorAll(".choice");
-
-buttons.forEach(btn=>{
-btn.disabled=true;
-});
-
-// ข้อ 10 ถูกหมด
-if(current===9){
-
-button.style.backgroundColor="lightgreen";
+// เช็คคะแนนแบบเนียนๆ
+if(
+choice === questions[current].answer
+|| current === 9
+){
 score++;
-
 }
-else{
-
-if(selected===correct){
-
-button.style.backgroundColor="lightgreen";
-score++;
-
-}else{
-
-button.style.backgroundColor="red";
-
-buttons.forEach(btn=>{
-
-if(btn.innerText===correct){
-
-btn.style.backgroundColor=
-"lightgreen";
-
-}
-
-});
-
-}
-
-}
-
-setTimeout(()=>{
 
 current++;
 
-if(current<questions.length){
+if(current < questions.length){
 
 showQuestion();
 
 }else{
 
 document.querySelector(".card").innerHTML=
-"<h2>รักนะ ิิ</h2><p>คะแนน "+score+"/10</p>";
+"<h2>รักนะ ิิ</h2><p>คะแนนตรีโกณ: "+score+"/10</p>";
 
 }
-
-},1000);
 
 }
